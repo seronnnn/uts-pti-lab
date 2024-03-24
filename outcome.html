@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Outcome</title>
+        <link rel="stylesheet" href="style.css"></link>  
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> </head>
+    </head>
+    <body>
+        <style>
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10%;
+            }
+        </style>
+        
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top" id="navBar">
+            <div id="logo">
+                <img src="Foto_pendukung/pngtree-money-bag-vector-png-image_7106786.png" alt="logo" >
+            </div>
+            <div id="menu">
+                <ul>
+                    <li><p id="loggedInUser"></p></li>
+                    <li><a href="main.html">Main</a></li>
+                    <li><a href="income.html">Income</a></li>
+                    <li><a href="outcome.html"><p id="currPage">Outcome</p></a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="login.html" id="logout" class="ms-5">Log Out</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h1 id="idOutcome"></h1>
+            <form id="formOutcome">
+                <div class="outcomeNamaNominal">
+                    <label for="name">Transaction name</label>
+                    <br>
+                    <input type="text" id="outcomeNama" />
+                </div>
+                <br>
+                <div class="outcomeNamaNominal">
+                    <label for="nominal">Transaction nominal</label>
+                    <br>
+                    <input type="number" id="outcomeNominal" />
+                </div>
+                <br>
+                <div id="outcomeType">
+                    <label>Transaction type</label>
+                    <br>
+                    <select name="outcomeTypeList" id="outcomeTypeList">
+                        <option style="display: none;"></option>
+                        <option value="Makan">Makan</option>
+                        <option value="Main">Main</option>
+                        <option value="Edukasi">Edukasi</option>
+                        <option value="Belanja">Belanja</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <br>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <script>
+            // var totalOutcome = 0;
+            document.addEventListener('DOMContentLoaded', function() {
+                document.getElementById('formOutcome').addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    var outcomeTransactionName = document.getElementById('outcomeNama').value.trim();
+                    var outcomeTransactionNominal = document.getElementById('outcomeNominal').value.trim();
+                    var outcomeTransactionType = document.getElementById('outcomeTypeList').value;
+                    
+                    if (outcomeTransactionName === '' || outcomeTransactionNominal === '' || outcomeTransactionType === '') {
+                        alert("Transaction incomplete, please fill out the form.");
+                    } else {
+                        localStorage.setItem('outcomeTransactionName', outcomeTransactionName);
+                        localStorage.setItem('outcomeTransactionNominal', outcomeTransactionNominal);
+                        localStorage.setItem('outcomeTransactionType', outcomeTransactionType);
+                        window.location.href = 'main.html';
+                        // totalOutcome -= parseFloat(outcomeTransactionNominal);
+                        // localStorage.setItem('totalOutcome', totalOutcome);
+                        alert("Transaction success.");
+                    }
+                });
+
+                const user = localStorage.getItem('username');
+                const usernameField = document.getElementById('loggedInUser');
+                const usernameOutcome = document.getElementById('idOutcome');
+                if (user) {
+                    usernameField.textContent = 'Hello, ' + user + '!';
+                    usernameOutcome.textContent =  user + "'s Outcome";
+                } else {
+                    usernameField.textContent = 'Hello, User!';
+                    usernameOutcome.textContent =  "User's " + 'Outcome';
+                }
+                
+                const logout = document.getElementById('logout');
+                logout.addEventListener('click', function(event) {
+                    event.preventDefault(); 
+                    localStorage.clear(); 
+                    window.location.href = 'login.html'; 
+                });
+            });
+
+        </script>
+    </body>
+</html>
+
+      
+
+
